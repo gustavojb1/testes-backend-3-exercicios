@@ -1,5 +1,5 @@
 import { UserDatabase } from "../database/UserDatabase"
-import { DeleteUserInputDTO, GetAllOutputDTO, GetByIdInputDTO, GetByIdOutputDTO, LoginInputDTO, LoginOutputDTO, SignupInputDTO, SignupOutputDTO } from "../dtos/userDTO";
+import { DeleteUserInputDTO, DeleteUserOutputtDTO, GetAllOutputDTO, GetByIdInputDTO, GetByIdOutputDTO, LoginInputDTO, LoginOutputDTO, SignupInputDTO, SignupOutputDTO } from "../dtos/userDTO";
 import { BadRequestError } from "../errors/BadRequestError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { User } from "../models/User";
@@ -139,7 +139,7 @@ export class UserBusiness {
         return output
     }
 
-    public deleteUser = async (input: DeleteUserInputDTO): Promise<void> => {
+    public deleteUser = async (input: DeleteUserInputDTO): Promise<DeleteUserOutputtDTO> => {
         const { idToDelete, token } = input
 
         if (typeof token !== "string") {
@@ -163,6 +163,11 @@ export class UserBusiness {
         }
 
         await this.userDatabase.deleteById(idToDelete)
+
+        const message={
+            message:"Usuário deletado com sucesso"
+        }
+        return message
     }
 
     public getById = async (input: GetByIdInputDTO): Promise<GetByIdOutputDTO> => {

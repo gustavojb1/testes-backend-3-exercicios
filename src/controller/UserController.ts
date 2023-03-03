@@ -71,9 +71,9 @@ export class UserController {
                 token: req.headers.authorization
             }
 
-            await this.userBusiness.deleteUser(input)
+            const output = await this.userBusiness.deleteUser(input)
 
-            res.status(200).end()
+            res.status(200).send(output)
         } catch (error) {
             console.log(error)
             if (error instanceof BaseError) {
